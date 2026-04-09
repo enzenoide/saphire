@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Backloggd</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-[#0a0a0a] text-gray-100">
+    <!-- Header -->
+    <nav class="fixed top-0 w-full bg-[#0a0a0a]/50 backdrop-blur z-50">
+        <div class="px-6 py-4 flex items-center justify-between">
+            <h1 class="text-[1.65rem] font-bold text-white">saphire</h1>
+            <div class="flex items-center gap-6">
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition text-sm">Reviews</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition text-sm">Sign In</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition text-sm">Create Account</a>
+                </div>
+                <div class="hidden sm:flex bg-gray-700 rounded-2xl px-3 py-2">
+                    <input type="text" placeholder="Pesquisar jogos..." class="bg-transparent text-gray-200 placeholder-gray-400 outline-none text-sm w-40">
+                    <button class="text-gray-300 hover:text-white">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </button>
+                </div>
+                <button class="md:hidden text-gray-400 hover:text-white">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="min-h-screen flex items-center justify-center px-4 py-10 mt-20">
+        <div class="w-[60vw] max-w-[1200px] mx-auto">
+            <header class="mb-10 text-center">
+                <p class="text-xs uppercase tracking-[0.4em] text-gray-500 mb-4">Catálogo de jogos</p>
+                <h1 class="text-4xl md:text-5xl font-semibold tracking-tight text-white">Meu Backloggd</h1>
+                <p class="mt-4 text-gray-400 max-w-2xl mx-auto text-sm md:text-base">Um visual escuro e centralizado para seus jogos, com cards menores e um layout em 5 fileiras de 4 títulos quando houver 20 jogos.</p>
+            </header>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+                {% for jogo in games %}
+                    <article class="group border border-gray-800 bg-[#1a1a1a] shadow-lg overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-gray-700">
+                        {% if jogo.cover_image %}
+                            <img
+                                src="{{ jogo.cover_image }}"
+                                alt="Capa de {{ jogo.name }}"
+                                class="h-52 w-full object-cover bg-gray-900"
+                            />
+                        {% else %}
+                            <div class="flex h-52 items-center justify-center bg-gray-900 text-gray-600">Sem imagem disponível</div>
+                        {% endif %}
+                        <div class="px-5 py-4">
+                            <h2 class="text-base font-medium text-gray-200 truncate">{{ jogo.name }}</h2>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
