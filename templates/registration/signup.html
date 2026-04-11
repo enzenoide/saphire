@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Saphire</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-[#0a0a0a] text-gray-100">
+    <div class="min-h-screen flex justify-start items-center px-4 pt-5">
+        <div class="w-full max-w-md mx-auto">
+            <header class="mb-10 text-center">
+                <p class="text-xs uppercase tracking-[0.4em] text-gray-500 mb-4">Cadastro</p>
+                <h1 class="text-4xl font-semibold tracking-tight text-white">Criar Conta</h1>
+                <p class="mt-4 text-gray-400 text-sm">Junte-se ao Saphire e organize seu backlog de jogos</p>
+            </header>
+
+            <div class="border border-gray-800 bg-[#0f0f0f] shadow-lg rounded-lg p-8">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="space-y-6">
+                        <div>
+                            <label for="id_username" class="block text-sm font-medium text-gray-300 mb-2">Usuário</label>
+                            <input type="text" name="username" id="id_username" required
+                                   class="w-full bg-gray-700 text-gray-200 placeholder-gray-400 rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-gray-600 transition">
+                        </div>
+                        <div>
+                            <label for="id_email" class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                            <input type="email" name="email" id="id_email" required
+                                   class="w-full bg-gray-700 text-gray-200 placeholder-gray-400 rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-gray-600 transition">
+                        </div>
+                        <div>
+                            <label for="id_password1" class="block text-sm font-medium text-gray-300 mb-2">Senha</label>
+                            <input type="password" name="password1" id="id_password1" required
+                                   class="w-full bg-gray-700 text-gray-200 placeholder-gray-400 rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-gray-600 transition">
+                        </div>
+                        <div>
+                            <label for="id_password2" class="block text-sm font-medium text-gray-300 mb-2">Confirmar Senha</label>
+                            <input type="password" name="password2" id="id_password2" required
+                                   class="w-full bg-gray-700 text-gray-200 placeholder-gray-400 rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-gray-600 transition">
+                        </div>
+                        <div class="pt-4">
+                            <button type="submit"
+                                    class="w-full bg-[#2f5bff] hover:bg-[#1f49e0] text-white font-medium py-3 px-4 rounded-lg transition duration-200">
+                                Criar Conta
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="mt-6 text-center">
+                    <p class="text-gray-400 text-sm">
+                        Já tem conta? <a href="{% url 'login' %}" class="text-gray-300 hover:text-white transition">Fazer login</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

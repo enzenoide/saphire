@@ -34,7 +34,7 @@
         </div>
     </nav>
 
-    <div class="min-h-screen flex items-center justify-center px-4 py-10 mt-20">
+    <div class="min-h-screen flex items-center justify-center px-4 py-20 mt-12">
         <div class="w-[60vw] max-w-[1200px] mx-auto">
             <header class="mb-10 text-center">
                 <p class="text-xs uppercase tracking-[0.4em] text-gray-500 mb-4">Catálogo de jogos</p>
@@ -44,7 +44,7 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
                 {% for jogo in games %}
-                    <article class="group border border-gray-800 bg-[#1a1a1a] shadow-lg overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-gray-700">
+                    <a href="{% url 'game_detail' jogo.pk %}" class="group block border border-transparent bg-[#1a1a1a] shadow-lg overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-gray-700">
                         {% if jogo.cover_image %}
                             <img
                                 src="{{ jogo.cover_image }}"
@@ -56,7 +56,8 @@
                         {% endif %}
                         <div class="px-5 py-4">
                             <h2 class="text-base font-medium text-gray-200 truncate">{{ jogo.name }}</h2>
-                    </article>
+                        </div>
+                    </a>
                 {% endfor %}
             </div>
         </div>
