@@ -7,53 +7,87 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="min-h-screen bg-[#0a0a0a] text-gray-100">
-    <nav class="fixed top-0 w-full bg-[#0a0a0a]/50 backdrop-blur z-50">
-        <div class="px-6 py-4 flex items-center justify-between">
-            <h1 class="text-[1.65rem] font-bold text-white">Backloggd</h1>
-            <div class="flex items-center gap-6">
-                <a href="{% url 'index' %}" class="text-gray-400 hover:text-white transition text-sm">Games</a>
-                <a href="{% url 'login' %}" class="text-gray-400 hover:text-white transition text-sm">Log In</a>
-                <a href="{% url 'signup' %}" class="text-gray-400 hover:text-white transition text-sm">Register</a>
-            </div>
-        </div>
-    </nav>
-
     <div class="min-h-screen pt-24 px-4 pb-10">
-        <div class="max-w-[1100px] mx-auto grid gap-8 lg:grid-cols-[0.8fr_1.2fr] items-start">
-            <div class="overflow-hidden border border-gray-800 bg-[#111111] shadow-xl max-w-[360px]">
-                {% if jogo.cover_image %}
-                    <img src="{{ jogo.cover_image }}" alt="Capa de {{ jogo.name }}" class="w-full h-full object-cover min-h-[360px]">
-                {% else %}
-                    <div class="flex h-80 items-center justify-center bg-gray-900 text-gray-500">Sem imagem disponível</div>
-                {% endif %}
-            </div>
-
-            <div class="flex h-full flex-col justify-between gap-8">
-                <div class="space-y-6">
-                    <div>
-                        <h1 class="text-5xl font-bold text-white">{{ jogo.name }}</h1>
-                        <p class="mt-3 text-sm uppercase tracking-normal text-gray-500">Lançamento: {{ jogo.release_date|date:'d M Y' }}</p>
-                        <p class="mt-4 text-base text-gray-400 leading-relaxed">{{ jogo.description }}</p>
-                    </div>
-
-                    <div class="grid gap-4 sm:grid-cols-2 text-gray-300">
-                        <div>
-                            <p class="text-xs uppercase tracking-normal text-gray-500">Gênero</p>
-                            <p class="mt-2 text-lg font-semibold text-white">{{ jogo.genre }}</p>
-                        </div>
-                        <div>
-                            <p class="text-xs uppercase tracking-normal text-gray-500">Plataformas</p>
-                            <p class="mt-2 text-lg font-semibold text-white">{{ jogo.platforms }}</p>
-                        </div>
-                    </div>
+        <div class="max-w-[1200px] mx-auto">
+            <div class="grid gap-8 lg:grid-cols-[0.5fr_1.5fr] items-start mb-16">
+                <div class="overflow-hidden border border-gray-800 bg-[#111111] shadow-xl max-w-[280px] w-full">
+                    {% if jogo.cover_image %}
+                        <img src="{{ jogo.cover_image }}" alt="Capa de {{ jogo.name }}" class="w-full h-full object-cover min-h-[420px]">
+                    {% else %}
+                        <div class="flex h-96 items-center justify-center bg-gray-900 text-gray-500">Sem imagem disponível</div>
+                    {% endif %}
                 </div>
 
-                <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                    <a href="{% url 'index' %}" class="inline-flex items-center justify-center rounded-full border border-gray-700 bg-[#111111] px-6 py-3 text-sm font-medium text-gray-200 transition hover:border-gray-500 hover:text-white">Voltar ao catálogo</a>
-                    <span class="rounded-full bg-[#2f5bff] px-6 py-3 text-sm font-semibold text-white">Ver mais jogos</span>
+                <div class="flex h-full flex-col justify-between gap-6">
+                    <div class="space-y-4">
+                        <div>
+                            <h1 class="text-3xl font-bold text-white">{{ jogo.name }}</h1>
+                            <p class="mt-2 text-xs uppercase tracking-normal text-gray-500">Lançamento: {{ jogo.release_date|date:'d M Y' }}</p>
+                            <p class="mt-3 text-sm text-gray-400 leading-relaxed">{{ jogo.description }}</p>
+                        </div>
+
+                        <div class="grid gap-3 sm:grid-cols-2 text-gray-300">
+                            <div>
+                                <p class="text-xs uppercase tracking-normal text-gray-500">Gênero</p>
+                                <p class="mt-1 text-base font-semibold text-white">{{ jogo.genre }}</p>
+                            </div>
+                            <div>
+                                <p class="text-xs uppercase tracking-normal text-gray-500">Plataformas</p>
+                                <p class="mt-1 text-base font-semibold text-white">{{ jogo.platforms }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                        <a href="{% url 'index' %}" class="inline-flex items-center justify-center rounded-full border border-gray-700 bg-[#111111] px-5 py-2 text-xs font-medium text-gray-200 transition hover:border-gray-500 hover:text-white">Voltar ao catálogo</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-w-[800px] border-t border-gray-800 pt-10">
+                <h2 class="text-2xl font-bold text-white mb-8">Reviews</h2>
+
+                {% if user.is_authenticated %}
+                <div class="bg-[#111111] border border-gray-800 p-6 rounded-lg mb-10">
+                    <h3 class="text-sm font-semibold text-gray-400 uppercase mb-4">O que você achou de {{ jogo.name }}?</h3>
+                    <form action="{% url 'create_review' jogo.id %}" method="post" class="space-y-4">
+                        {% csrf_token %}
+                        
+                        <div>
+                            <label class="block text-xs text-gray-500 mb-1">Nota (1 a 5)</label>
+                            {{ form.rating }}
+                        </div>
+
+                        <div>
+                            {{ form.comment }}
+                        </div>
+
+                        <button type="submit" class="bg-[#2f5bff] hover:bg-[#1e40af] text-white px-6 py-2 rounded font-bold text-sm transition">
+                            Publicar Review
+                        </button>
+                    </form>
+                </div>
+                {% else %}
+                <div class="bg-gray-900/50 border border-gray-800 p-6 rounded-lg mb-10 text-center">
+                    <p class="text-gray-400 text-sm">Faça <a href="{% url 'login' %}" class="text-[#2f5bff] hover:underline">login</a> para deixar uma review.</p>
+                </div>
+                {% endif %}
+
+                <div class="space-y-6">
+                    {% for review in reviews %}
+                    <div class="bg-[#111111] border-l-4 border-[#2f5bff] p-5 rounded-r-lg shadow-sm">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-bold text-white text-sm">{{ review.user.username }}</span>
+                            <span class="text-[#2f5bff] font-bold text-sm">{{ review.rating }} ★</span>
+                        </div>
+                        <p class="text-gray-400 text-sm italic">"{{ review.comment }}"</p>
+                        <p class="text-[10px] text-gray-600 mt-3 uppercase">{{ review.created_at|date:"d M Y" }}</p>
+                    </div>
+                    {% empty %}
+                    <p class="text-gray-500 text-sm">Ninguém comentou sobre este jogo ainda.</p>
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
 </body>
-</html>

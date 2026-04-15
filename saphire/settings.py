@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'saphire_app',
     'games',
     'users',
+    'reviews',
 ]
 
 MIDDLEWARE = [

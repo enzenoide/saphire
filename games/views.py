@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Games
+from reviews.forms import ReviewForm
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.forms import UserCreationForm
@@ -16,7 +17,8 @@ def index(request):
 def game_detail(request, pk):
     jogo = get_object_or_404(Games, pk=pk)
     context = {
-        'jogo': jogo
+        'jogo': jogo,
+        'form': ReviewForm()
     }
     return render(request, 'game_detail.html', context)
 
